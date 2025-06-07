@@ -1,0 +1,5 @@
+---
+# defaults file for pve
+
+gitlab_runner_name: "{{ inventory_hostname }}"
+gitlab_runner_concurrent: 4
