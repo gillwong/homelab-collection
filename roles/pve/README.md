@@ -19,4 +19,4 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: pve
       roles:
-         - role: pve
+         - role: gillwong.homelab.pve
