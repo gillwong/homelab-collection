@@ -1,0 +1,20 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    
+jobs:
+  lint:
+    uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
+  sanity:
+    uses: ansible/ansible-content-actions/.github/workflows/sanity.yaml@main
+  release:
+    uses: ansible/ansible-content-actions/.github/workflows/release.yaml@main
+    with:
+      environment: release
+      ah_publish: false
+      galaxy_publish: true
+  
