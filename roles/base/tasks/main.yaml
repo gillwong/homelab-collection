@@ -1,0 +1,58 @@
+---
+# tasks file for base
+
+- name: Set timezone to Asia/Singapore
+  become: true
+  community.general.timezone:
+    name: Asia/Singapore
+
+- name: Disable NTP
+  become: true
+  ansible.builtin.command: timedatectl set-ntp false
+  changed_when: true
+
+- name: Set date manually
+  become: true
+  ansible.builtin.command: timedatectl set-time {{ '%Y-%m-%d' | strftime }}
+  changed_when: true
+
+- name: Set time manually
+  become: true
+  ansible.builtin.command: timedatectl set-time {{ '%H:%M:%S' | strftime }}
+  changed_when: true
+
+- name: Configure NTP time servers which support NTS
+  become: true
+  ansible.builtin.blockinfile:
+    path: "{{ base_chrony_conf }}"
+    insertbefore: "# Use time sources from DHCP\\."
+    state: present
+    block: |
+      {% for item in base_ntp_servers %}
+      server {{ item }} iburst nts
+      {% endfor %}
+
+- name: Remove previous NTP time server pool
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ base_chrony_conf }}"
+    regexp: ^pool\\s+.+
+    state: absent
+
+- name: Remove comment about previous NTP time server pool
+  become: true
+  ansible.builtin.lineinfile:
+    path: "{{ base_chrony_conf }}"
+    search_string: "# Use Debian vendor zone."
+    state: absent
+
+- name: Enable NTP
+  become: true
+  ansible.builtin.command: timedatectl set-ntp true
+  changed_when: true
+
+- name: Restart chronyd
+  become: true
+  ansible.builtin.service:
+    name: chronyd
+    state: restarted
