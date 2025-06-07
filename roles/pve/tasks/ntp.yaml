@@ -21,7 +21,7 @@
     insertbefore: "# Use time sources from DHCP\\."
     state: present
     block: |
-      {% for item in pve_node_ntp_servers %}
+      {% for item in pve_ntp_servers %}
       server {{ item }} iburst nts
       {% endfor %}
 
