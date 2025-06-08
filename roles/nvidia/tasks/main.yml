@@ -1,0 +1,17 @@
+---
+# tasks file for nvidia
+
+- name: Fail if not RedHat family
+  when: ansible_facts['os_family'] != 'RedHat'
+  ansible.builtin.fail:
+    msg: "This role only supports RedHat family hosts."
+
+- name: Install NVIDIA GPU driver
+  when: ansible_facts['os_family'] == 'RedHat'
+  ansible.builtin.import_tasks: rhel.yml
+
+- name: Reboot
+  become: true
+  ansible.builtin.reboot:
+  tags:
+    - reboot

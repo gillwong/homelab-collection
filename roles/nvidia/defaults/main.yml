@@ -1,0 +1,7 @@
+---
+# defaults file for nvidia
+
+nvidia_distro: rhel9
+nvidia_arch: x86_64
+nvidia_arch_ext: x86_64
+nvidia_module_type: proprietary

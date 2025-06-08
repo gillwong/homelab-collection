@@ -1,0 +1,74 @@
+---
+- name: Install kernel headers and development packages
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - kernel-devel-matched
+      - kernel-headers
+    state: present
+
+- name: Reboot
+  become: true
+  ansible.builtin.reboot:
+  tags:
+    - reboot
+    - post_kernel_install_reboot
+
+- name: Enable EPEL
+  become: true
+  community.general.dnf_config_manager:
+    name: crb
+    state: enabled
+
+- name: Install epel-release package
+  become: true
+  ansible.builtin.dnf:
+    name: epel-release
+    state: present
+
+- name: Enable NVIDIA's RPM repository
+  become: true
+  ansible.builtin.command:
+    argv:
+      - dnf
+      - config-manager
+      - --add-repo
+      - https://developer.download.nvidia.com/compute/cuda/repos/{{ nvidia_distro }}/{{ nvidia_arch }}/cuda-{{ nvidia_distro }}.repo
+  changed_when: true
+
+- name: Clean DNF repository cache
+  become: true
+  ansible.builtin.command: dnf clean expire-cache
+  changed_when: true
+
+- name: Install using open source modules
+  when: nvidia_module_type == 'open'
+  block:
+    - name: Enable open kernel modules
+      become: true
+      ansible.builtin.command: dnf --assumeyes module enable nvidia-driver:open-dkms
+      changed_when: true
+
+    - name: Install compute-only (headless) driver using open kernel modules
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - nvidia-driver-cuda
+          - kmod-nvidia-open-dkms
+        state: present
+
+- name: Install using proprietary modules
+  when: nvidia_module_type == 'proprietary'
+  block:
+    - name: Enable proprietary kernel modules
+      become: true
+      ansible.builtin.command: dnf --assumeyes module enable nvidia-driver:latest-dkms
+      changed_when: true
+
+    - name: Install compute-only (headless) driver using proprietary kernel modules
+      become: true
+      ansible.builtin.dnf:
+        name:
+          - nvidia-driver-cuda
+          - kmod-nvidia-latest-dkms
+        state: present
