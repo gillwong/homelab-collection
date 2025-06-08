@@ -2,7 +2,7 @@
 # tasks file for pve
 
 - name: Configure cloud-init files
-  ansible.builtin.import_tasks: cloud_init.yaml
+  ansible.builtin.import_tasks: cloud_init.yml
 
 - name: Configure NTP
-  ansible.builtin.import_tasks: ntp.yaml
+  ansible.builtin.import_tasks: ntp.yml

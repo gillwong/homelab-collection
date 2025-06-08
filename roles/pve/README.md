@@ -10,7 +10,7 @@ The following variables are required unless stated otherwise.
 
 | Variable | Description | Default |
 | -- | -- | -- |
-| `pve_ntp_servers` | NTP servers for chronyd inside the PVE node. | See `defaults/main.yaml`. |
+| `pve_ntp_servers` | NTP servers for chronyd inside the PVE node. | See `defaults/main.yml`. |
 
 Example Playbook
 ----------------
