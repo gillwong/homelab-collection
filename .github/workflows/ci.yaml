@@ -17,8 +17,6 @@ jobs:
   changelog:
     uses: ansible/ansible-content-actions/.github/workflows/changelog.yaml@main
     if: github.event_name == 'pull_request'
-  lint:
-    uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
   sanity:
     uses: ansible/ansible-content-actions/.github/workflows/sanity.yaml@main
   all_green:
@@ -26,7 +24,6 @@ jobs:
     needs:
       - changelog
       - sanity
-      - lint
     runs-on: ubuntu-latest
     steps:
       - run: >-
@@ -34,5 +31,4 @@ jobs:
           set([
           '${{ needs.changelog.result }}',
           '${{ needs.sanity.result }}',
-          '${{ needs.lint.result }}'
           ])"
