@@ -1,0 +1,47 @@
+---
+# tasks file for k8s_base
+
+- name: Install iptables
+  become: true
+  ansible.builtin.package:
+    name: iptables
+    state: present
+
+- name: Check if firewalld exists
+  become: true
+  ansible.builtin.command: firewall-cmd --version
+  changed_when: false
+  ignore_errors: true
+  register: firewalld_version_output
+
+- name: Disable firewalld
+  become: true
+  when: firewalld_version_output.rc == 0
+  ansible.builtin.service:
+    name: firewalld
+    state: stopped
+    enabled: false
+
+- name: Disable swap
+  ansible.builtin.import_tasks: swap.yml
+
+- name: Enable IPv4 packet forwarding
+  become: true
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+    sysctl_set: true
+    reload: true
+
+- name: Configure SELinux
+  become: true
+  ansible.posix.selinux:
+    policy: targeted
+    state: permissive
+
+- name: Reboot
+  become: true
+  ansible.builtin.reboot:
+  tags:
+    - reboot
