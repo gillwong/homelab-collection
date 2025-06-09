@@ -1,0 +1,2 @@
+roles/containerd/defaults/main.yml yaml[line-length]
+galaxy.yml galaxy[no-changelog]
