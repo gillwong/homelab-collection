@@ -1,0 +1,8 @@
+---
+# tasks file for containerd
+
+- name: Install runc, containerd, and CNI plugins
+  ansible.builtin.import_tasks: install.yml
+
+- name: Configure containerd
+  ansible.builtin.import_tasks: config.yml
