@@ -7,7 +7,7 @@
       - config-manager
       - --add-repo
       - https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo
-  changed_when: true
+    creates: /etc/yum.repos.d/nvidia-container-toolkit.repo
 
 - name: Enable NVIDIA's experimental packages
   become: true

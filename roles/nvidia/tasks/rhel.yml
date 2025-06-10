@@ -34,7 +34,7 @@
       - config-manager
       - --add-repo
       - https://developer.download.nvidia.com/compute/cuda/repos/{{ nvidia_distro }}/{{ nvidia_arch }}/cuda-{{ nvidia_distro }}.repo
-  changed_when: true
+    creates: /etc/yum.repos.d/cuda-{{ nvidia_distro }}.repo
 
 - name: Clean DNF repository cache
   become: true

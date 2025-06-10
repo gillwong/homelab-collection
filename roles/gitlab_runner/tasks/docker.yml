@@ -17,6 +17,7 @@
 - name: Install dnf-plugins-core
   ansible.builtin.dnf:
     name: dnf-plugins-core
+    state: present
 
 - name: Set up Docker's RPM repository
   ansible.builtin.command:
@@ -25,7 +26,7 @@
       - config-manager
       - --add-repo
       - https://download.docker.com/linux/rhel/docker-ce.repo
-  changed_when: true
+    creates: /etc/yum.repos.d/docker-ce.repo
 
 - name: Install Docker packages
   ansible.builtin.dnf:

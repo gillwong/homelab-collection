@@ -1,6 +1,12 @@
 ---
 # tasks file for gitlab_runner
 
+- name: Fail if not RedHat family
+  ansible.builtin.import_role:
+    name: gillwong.homelab.os
+  vars:
+    os_distro: RedHat
+
 - name: Install Docker
   become: true
   ansible.builtin.import_tasks: docker.yml

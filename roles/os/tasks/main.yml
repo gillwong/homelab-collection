@@ -1,0 +1,7 @@
+---
+# tasks file for os
+
+- name: Fail if not RedHat family
+  when: ansible_facts['os_family'] != os_distro
+  ansible.builtin.fail:
+    msg: This role only supports {{ os_distro }} family hosts.
