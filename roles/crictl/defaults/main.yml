@@ -1,0 +1,6 @@
+---
+# defaults file for crictl
+
+crictl_version: 1.33.0
+crictl_system_arch: amd64
+crictl_archive: crictl-v{{ crictl_version }}-linux-{{ crictl_system_arch }}.tar.gz

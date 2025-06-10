@@ -1,0 +1,25 @@
+---
+# tasks file for crictl
+
+- name: Extract crictl binary archive
+  become: true
+  ansible.builtin.unarchive:
+    src: "{{ crictl_download_dir }}/{{ crictl_archive }}"
+    dest: /usr/local/bin/
+    mode: "755"
+
+- name: Create a crictl symlink for root access
+  become: true
+  ansible.builtin.file:
+    src: /usr/local/bin/crictl
+    dest: /usr/bin/crictl
+    state: link
+    mode: "755"
+
+# Reference: https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md
+- name: Generate crictl configuration
+  become: true
+  ansible.builtin.template:
+    src: crictl.yaml.j2
+    dest: /etc/crictl.yaml
+    mode: "644"
