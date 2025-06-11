@@ -1,0 +1,26 @@
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: ClusterConfiguration
+etcd:
+  local:
+    extraArgs:
+      - name: listen-metrics-urls
+        value: http://0.0.0.0:2381
+networking:
+  serviceSubnet: {{ kubeadm_init_service_subnet }}
+  podSubnet: {{ kubeadm_init_pod_subnet }}
+  dnsDomain: cluster.local
+controlPlaneEndpoint: {{ kubeadm_init_cluster_endpoint }}:6443
+apiServer:
+  extraArgs:
+    - name: bind-address
+      value: 0.0.0.0
+  certSANs: {{ kubeadm_init_extra_sans }}
+controllerManager:
+  extraArgs:
+    - name: bind-address
+      value: 0.0.0.0
+scheduler:
+  extraArgs:
+    - name: bind-address
+      value: 0.0.0.0
+encryptionAlgorithm: ECDSA-P256

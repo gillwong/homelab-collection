@@ -1,0 +1,29 @@
+---
+# tasks file for kubeadm_init
+
+- name: Modify kube-vip StaticPod manifest
+  become: true
+  ansible.builtin.replace:
+    path: /etc/kubernetes/manifests/kube-vip.yaml
+    regexp: '(\s+)path: /etc/kubernetes/admin.conf'
+    replace: '\1path: /etc/kubernetes/super-admin.conf'
+
+- name: Copy kubeadm init configuration
+  become: true
+  ansible.builtin.template:
+    src: kubeadm_init.yaml.j2
+    dest: /etc/kubeadm_init.yaml
+    mode: "644"
+  register: kubeadm_init_config
+
+- name: Check if Kubernetes cluster initialized
+  ansible.builtin.command: kubectl get --raw='/readyz?verbose'
+  ignore_errors: true
+  register: kubectl_output
+  changed_when: false
+
+- name: Initialize Kubernetes control plane
+  when: kubectl_output.rc != 0
+  become: true
+  ansible.builtin.command: kubeadm init --upload-certs --config={{ kubeadm_init_config.dest }}
+  changed_when: true
