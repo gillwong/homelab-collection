@@ -1,0 +1,6 @@
+---
+# defaults file for calico
+
+calico_version: 3.30.1
+calico_tigera_operator_url: https://raw.githubusercontent.com/projectcalico/calico/v{{ calico_version }}/manifests
+calico_pod_subnet: 10.244.0.0/16
