@@ -1,5 +1,5 @@
 ---
-# tasks file for base
+# tasks file for k8s_tools
 
 - name: Fail if not RedHat family
   ansible.builtin.import_role:
