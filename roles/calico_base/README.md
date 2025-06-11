@@ -1,7 +1,9 @@
-gillwong.homelab.openebs_base role
+gillwong.homelab.calico_base role
 =========
 
-Applies base configuration for Kubernetes cluster storage solution [OpenEBS](https://openebs.io).
+Applies base configuration for Kubernetes cluster pod networking solution [Calico](https://www.tigera.io/project-calico/).
+
+Skip the `reboot` tag if you want to skip system reboot.
 
 Example Playbook
 ----------------
@@ -10,4 +12,4 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: k8s
       roles:
-         - role: gillwong.homelab.openebs_base
+         - role: gillwong.homelab.calico_base
