@@ -1,0 +1,37 @@
+---
+# tasks file for k8s_cp_base
+
+- name: Create Kubernetes manifests directory
+  become: true
+  ansible.builtin.file:
+    path: /etc/kubernetes/manifests
+    state: directory
+    mode: "755"
+
+# Reference: https://kube-vip.io/docs/installation/static/
+- name: Setup kube-vip StaticPod manifest
+  become: true
+  ansible.builtin.template:
+    src: kube-vip.yaml.j2
+    dest: /etc/kubernetes/manifests/kube-vip.yaml
+    mode: "644"
+
+# Required for IPVS
+- name: Install ipvsadm
+  become: true
+  ansible.builtin.package:
+    name: ipvsadm
+    state: present
+
+- name: Enable ip_vs kernel module
+  become: true
+  community.general.modprobe:
+    name: ip_vs
+    state: present
+    persistent: present
+
+- name: Reboot
+  become: true
+  ansible.builtin.reboot:
+  tags:
+    - reboot
