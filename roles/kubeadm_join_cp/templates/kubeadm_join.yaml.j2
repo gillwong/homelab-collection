@@ -1,0 +1,10 @@
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: JoinConfiguration
+discovery:
+  bootstrapToken:
+    apiServerEndpoint: {{ kubeadm_join_cp_cluster_endpoint }}:6443
+    token: {{ kubeadm_join_cp_token }}
+    caCertHashes:
+      - {{ kubeadm_join_cp_ca_cert_hash }}
+controlPlane:
+  certificateKey: {{ kubeadm_join_cp_ca_key }}
