@@ -10,7 +10,7 @@ The following variables are required unless stated otherwise.
 
 | Variable | Description | Default |
 | -- | -- | -- |
-| `base_chrony_conf` | chrony configuration file path | `/etc/chrony.conf` |
+| `base_chrony_conf` | chrony configuration file path. | `/etc/chrony.conf` |
 | `base_ntp_servers` | NTP servers for chronyd inside the machine. | See `defaults/main.yml`. |
 
 Example Playbook

@@ -1,0 +1,9 @@
+---
+# tasks file for calico_base
+
+- name: Configure NetworkManager to not interfere Calico networks
+  become: true
+  ansible.builtin.template:
+    src: calico.conf.j2
+    dest: /etc/NetworkManager/conf.d/calico.conf
+    mode: "644"

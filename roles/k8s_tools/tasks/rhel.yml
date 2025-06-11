@@ -1,0 +1,23 @@
+---
+- name: Add Kubernetes RPM repository
+  become: true
+  ansible.builtin.template:
+    src: kubernetes.repo.j2
+    dest: /etc/yum.repos.d/kubernetes.repo
+    mode: "644"
+
+- name: Install kubelet, kubeadm, and kubectl
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - kubelet
+      - kubeadm
+      - kubectl
+    disable_excludes: kubernetes
+
+- name: Enable the kubelet service
+  become: true
+  ansible.builtin.systemd:
+    name: kubelet
+    state: started
+    enabled: true

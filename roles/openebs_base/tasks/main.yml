@@ -1,0 +1,29 @@
+---
+# tasks file for openebs_base
+
+- name: Enable nvme-tcp kernel module
+  become: true
+  community.general.modprobe:
+    name: nvme-tcp
+    state: present
+    persistent: present
+
+- name: Enable 2MB huge pages
+  become: true
+  ansible.builtin.shell: sudo sh -c 'echo 1024 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages'
+  changed_when: true
+
+- name: Persist huge pages
+  become: true
+  ansible.posix.sysctl:
+    name: vm.nr_hugepages
+    value: "1024"
+    state: present
+    sysctl_set: true
+    reload: true
+
+- name: Reboot
+  become: true
+  ansible.builtin.reboot:
+  tags:
+    - reboot
