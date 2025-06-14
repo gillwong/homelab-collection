@@ -14,6 +14,7 @@ The following variables are required unless stated otherwise.
 | `kubeadm_init_pod_subnet` | Kubernetes Pods subnet CIDR. | `10.244.0.0/16` |
 | `kubeadm_init_cluster_endpoint` | Kubernetes cluster endpoint. | - |
 | `kubeadm_init_extra_sans` | A list of additional SANs for the cluster endpoint. | `[]` |
+| `kubeadm_init_proxy_mode` | kube-proxy [mode](https://kubernetes.io/docs/reference/config-api/kube-proxy-config.v1alpha1/#kubeproxy-config-k8s-io-v1alpha1-ProxyMode). | `iptables` |
 
 Example Playbook
 ----------------

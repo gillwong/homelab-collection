@@ -2,9 +2,17 @@
 # tasks file for k8s_base
 
 - name: Install iptables
+  when: k8s_base_proxy_mode == 'iptables'
   become: true
   ansible.builtin.package:
     name: iptables
+    state: present
+
+- name: Install nftables
+  when: k8s_base_proxy_mode == 'nftables'
+  become: true
+  ansible.builtin.package:
+    name: nftables
     state: present
 
 - name: Check if firewalld exists

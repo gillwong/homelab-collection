@@ -24,3 +24,7 @@ scheduler:
     - name: bind-address
       value: 0.0.0.0
 encryptionAlgorithm: ECDSA-P256
+---
+apiVersion: kubeproxy.config.k8s.io/v1alpha1
+kind: KubeProxyConfiguration
+mode: {{ kubeadm_init_proxy_mode }}

@@ -4,3 +4,4 @@
 kubeadm_init_service_subnet: 10.96.0.0/12
 kubeadm_init_pod_subnet: 10.244.0.0/16
 kubeadm_init_extra_sans: []
+kubeadm_init_proxy_mode: iptables
