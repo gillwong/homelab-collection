@@ -1,5 +1,7 @@
 # Homelab Ansible Collection
 
+[![CI](https://github.com/gillwong/homelab-collection/actions/workflows/ci.yaml/badge.svg)](https://github.com/gillwong/homelab-collection/actions/workflows/ci.yaml) [![Release](https://github.com/gillwong/homelab-collection/actions/workflows/release.yaml/badge.svg?event=release)](https://github.com/gillwong/homelab-collection/actions/workflows/release.yaml)
+
 A comprehensive collection of Ansible roles for managing and automating my homelab infrastructure.
 
 ## Scope
