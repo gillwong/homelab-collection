@@ -7,6 +7,7 @@ metadata:
 spec:
   # Configures Calico networking.
   calicoNetwork:
+    linuxDataplane: {{ calico_kube_proxy_mode | capitalize }}
     bgp: Disabled
     ipPools:
       - name: default-ipv4-ippool

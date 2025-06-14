@@ -13,9 +13,7 @@ The following variables are required unless stated otherwise.
 | `calico_version` | Calico version. | `3.30.1` |
 | `calico_tigera_operator_url` | Base URL for Tigera operator manifests. | `https://raw.githubusercontent.com/projectcalico/calico/v{{ calico_version }}/manifests` |
 | `calico_pod_subnet` | Kubernetes Pods subnet CIDR | `10.244.0.0/16` |
-| `calico_` | desc. | `value` |
-| `calico_` | desc. | `value` |
-| `calico_` | desc. | `value` |
+| `calico_kube_proxy_mode` | kube-proxy [mode](https://kubernetes.io/docs/reference/config-api/kube-proxy-config.v1alpha1/#kubeproxy-config-k8s-io-v1alpha1-ProxyMode). | `iptables` |
 
 Example Playbook
 ----------------
