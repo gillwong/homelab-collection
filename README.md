@@ -45,7 +45,7 @@ override_var: value
 - **containerd**: Installs and configures containerd runtime
 - **crictl**: Installs and configures crictl tool
 - **flux**: Installs and configures Flux for GitOps
-- **gitlab_runner**: Installs and configures GitLab Runner
+- **gitlab_runner**: Installs and configures a self-hosted GitLab Runner
 - **k8s_base**: Base configuration for Kubernetes nodes
 - **k8s_cp_base**: Control plane base configuration
 - **k8s_download**: Handles Kubernetes binary downloads
@@ -56,8 +56,8 @@ override_var: value
 - **kubeadm_post**: Post-initialization tasks for kubeadm
 - **nvidia**: Installs NVIDIA drivers and tools
 - **nvidia_containerd**: NVIDIA containerd integration
-- **openebs_base**: Installs and configures OpenEBS storage
-- **os**: OS-specific configuration
+- **openebs_base**: Configures system for OpenEBS
+- **os**: Utility role to check a system's OS family
 - **pve**: Proxmox VE node base configuration
 
 See each role's `README.md` for more details and available variables.
