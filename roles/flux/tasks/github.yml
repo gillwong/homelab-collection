@@ -1,0 +1,17 @@
+---
+- name: Bootstrap Flux with GitHub
+  become: true
+  ansible.builtin.command:
+    cmd: |
+      flux bootstrap github
+        --components-extra=image-reflector-controller,image-automation-controller
+        --token-auth=false
+        --read-write-key=true
+        --owner={{ flux_git_username }}
+        --repository={{ flux_git_repository }}
+        --branch={{ flux_git_branch }}
+        --path={{ flux_git_path }}
+        --personal
+  environment:
+    GITHUB_TOKEN: "{{ flux_git_token }}"
+  changed_when: true

@@ -1,0 +1,7 @@
+---
+# defaults file for flux
+
+flux_version: 2.6.1
+flux_git_provider: github
+flux_git_branch: main
+flux_git_path: clusters/homelab

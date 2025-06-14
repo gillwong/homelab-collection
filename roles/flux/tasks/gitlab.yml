@@ -1,0 +1,16 @@
+---
+- name: Bootstrap Flux with GitLab
+  become: true
+  ansible.builtin.command:
+    cmd: |
+      flux bootstrap gitlab
+        --components-extra=image-reflector-controller,image-automation-controller
+        --token-auth
+        --owner={{ flux_git_username }}
+        --repository={{ flux_git_repository }}
+        --branch={{ flux_git_branch }}
+        --path={{ flux_git_path }}
+        --personal
+  environment:
+    GITLAB_TOKEN: "{{ flux_git_token }}"
+  changed_when: true

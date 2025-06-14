@@ -1,0 +1,32 @@
+---
+# tasks file for flux
+
+- name: Install Flux CLI
+  ansible.builtin.import_tasks: cli.yml
+
+- name: Check cluster compatibility
+  ansible.builtin.command:
+    cmd: flux check --pre
+  register: flux_precheck_output
+  failed_when: flux_precheck_output.rc != 0
+  changed_when: false
+
+- name: Check Flux installation
+  run_once: true
+  ansible.builtin.command:
+    cmd: flux check
+  register: flux_check_output
+  changed_when: false
+  ignore_errors: true
+
+- name: Bootstrap Flux
+  when: flux_check_output.rc != 0
+  run_once: true
+  block:
+    - name: Import GitLab bootstrap tasks
+      ansible.builtin.import_tasks: gitlab.yml
+      when: flux_git_provider == 'gitlab'
+
+    - name: Import GitHub bootstrap tasks
+      ansible.builtin.import_tasks: github.yml
+      when: flux_git_provider == 'github'
