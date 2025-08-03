@@ -1,6 +1,12 @@
 ---
 # tasks file for k8s_base
 
+- name: Install tar
+  become: true
+  ansible.builtin.package:
+    name: tar
+    state: present
+
 - name: Install iptables
   when: k8s_base_proxy_mode == 'iptables'
   become: true
@@ -38,6 +44,16 @@
   ansible.posix.sysctl:
     name: net.ipv4.ip_forward
     value: "1"
+    state: present
+    sysctl_set: true
+    reload: true
+
+# Reference: https://github.com/fluent/fluent-bit/issues/1777#issuecomment-613849415
+- name: Increase file system inotify max user instances
+  become: true
+  ansible.posix.sysctl:
+    name: fs.inotify.max_user_instances
+    value: "1500"
     state: present
     sysctl_set: true
     reload: true

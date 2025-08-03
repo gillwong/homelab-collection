@@ -14,6 +14,7 @@ The following variables are required unless stated otherwise.
 | -- | -- | -- |
 | `k8s_cp_base_cluster_endpoint` | Kubernetes cluster endpoint IP address. | - |
 | `k8s_cp_base_kube_vip_version` | kube-vip version. | `0.9.1` |
+| `k8s_cp_base_kube_vip_interface` | kube-vip network interface. | `eth0` |
 
 Example Playbook
 ----------------

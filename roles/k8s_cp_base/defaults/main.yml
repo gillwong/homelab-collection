@@ -1,4 +1,5 @@
 ---
 # defaults file for k8s_cp_base
 
-k8s_cp_base_kube_vip_version: 0.9.1
+k8s_cp_base_kube_vip_version: 1.0.0
+k8s_cp_base_kube_vip_interface: eth0
