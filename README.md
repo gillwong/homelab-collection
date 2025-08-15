@@ -59,5 +59,6 @@ override_var: value
 - **openebs_base**: Configures system for OpenEBS
 - **os**: Utility role to check a system's OS family
 - **pve**: Proxmox VE node base configuration
+- **ntp**: Network Time Protocol configuration
 
 See each role's `README.md` for more details and available variables.

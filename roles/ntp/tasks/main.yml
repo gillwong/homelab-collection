@@ -1,0 +1,5 @@
+---
+# tasks file for ntp
+
+- name: Configure NTP
+  ansible.builtin.import_tasks: ntp.yml
