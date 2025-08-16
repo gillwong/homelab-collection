@@ -1,0 +1,20 @@
+---
+# tasks file for update_libosinfo
+
+- name: Create temporary directory
+  ansible.builtin.tempfile:
+    state: directory
+  register: download
+
+- name: Download libosinfo database
+  ansible.builtin.get_url:
+    url: "{{ update_libosinfo_url }}"
+    timeout: 30
+    dest: "{{ download.path }}/"
+    mode: "644"
+  register: downloaded
+
+- name: Update local libosinfo database
+  become: true
+  ansible.builtin.command: osinfo-db-import --local {{ downloaded.dest }}
+  changed_when: true

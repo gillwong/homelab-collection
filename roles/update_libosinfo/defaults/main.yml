@@ -1,0 +1,4 @@
+---
+# defaults file for update_libosinfo
+
+update_libosinfo_url: https://releases.pagure.org/libosinfo/osinfo-db-{{ update_libosinfo_version }}.tar.xz
