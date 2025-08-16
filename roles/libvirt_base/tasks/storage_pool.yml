@@ -1,0 +1,46 @@
+---
+- name: Check if volume group exists
+  become: true
+  ansible.builtin.command: vgdisplay {{ libvirt_base_vg_name }}
+  register: vg_check
+  failed_when: false
+  changed_when: false
+
+- name: Fail when volume group does not exist
+  when: vg_check.rc != 0
+  ansible.builtin.fail:
+    msg: Volume group '{{ libvirt_base_vg_name }}' does not exist.
+
+- name: Check if storage pool exists
+  become: true
+  community.libvirt.virt_pool:
+    name: "{{ libvirt_base_pool_name }}"
+    command: info
+  register: pool_info
+  failed_when: false
+
+- name: Define storage pool from XML definition
+  when: libvirt_base_pool_name not in pool_info.pools
+  become: true
+  community.libvirt.virt_pool:
+    name: "{{ libvirt_base_pool_name }}"
+    command: define
+    xml: "{{ lookup('ansible.builtin.template', 'lvmpool.xml.j2') }}"
+
+- name: Start the storage pool
+  become: true
+  community.libvirt.virt_pool:
+    name: "{{ libvirt_base_pool_name }}"
+    state: active
+
+- name: Ensure that the storage pool will be started at boot
+  become: true
+  community.libvirt.virt_pool:
+    name: "{{ libvirt_base_pool_name }}"
+    autostart: true
+
+- name: Verify storage pool creation
+  become: true
+  community.libvirt.virt_pool:
+    name: "{{ libvirt_base_pool_name }}"
+    command: info

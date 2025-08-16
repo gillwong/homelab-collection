@@ -1,0 +1,5 @@
+---
+# defaults file for libvirt_base
+
+libvirt_base_pool_name: lvmpool
+libvirt_base_vg_name: rhel

@@ -1,0 +1,10 @@
+<pool type="logical">
+  <name>{{ libvirt_base_pool_name }}</name>
+  <source>
+    <name>{{ libvirt_base_vg_name }}</name>
+    <format type="lvm2" />
+  </source>
+  <target>
+    <path>/dev/{{ libvirt_base_pool_name }}</path>
+  </target>
+</pool>

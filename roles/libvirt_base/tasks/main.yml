@@ -1,0 +1,5 @@
+---
+# tasks file for libvirt_base
+
+- name: Configure logical volume storage pool
+  ansible.builtin.import_tasks: storage_pool.yml
