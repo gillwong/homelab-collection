@@ -1,0 +1,48 @@
+---
+- name: Create temporary directory
+  ansible.builtin.tempfile:
+    state: directory
+  register: tmp
+
+- name: Generate cloud-init user-data
+  ansible.builtin.template:
+    src: user-data.yaml.j2
+    dest: "{{ tmp.path }}/user-data.yaml"
+    mode: "644"
+  register: ci_user_data
+
+- name: Generate cloud-init network configuration
+  ansible.builtin.template:
+    src: network-config.yaml.j2
+    dest: "{{ tmp.path }}/network-config.yaml"
+    mode: "644"
+  register: ci_network_config
+
+- name: List all VMs
+  become: true
+  community.libvirt.virt:
+    command: list_vms
+  register: vms
+
+- name: Create and start VM
+  when: create_almalinux_vm_name not in vms
+  become: true
+  ansible.builtin.command:
+    argv:
+      - virt-install
+      - --name={{ create_almalinux_vm_name }}
+      - --memory={{ create_almalinux_vm_mem_mib }}
+      - --machine=q35
+      - --vcpus={{ create_almalinux_vm_vcpus }}
+      - --cpu=host-passthrough
+      - --import
+      - --cloud-init=user-data={{ ci_user_data.dest }},network-config={{ ci_network_config.dest }}
+      - --osinfo=almalinux10
+      - --disk=vol={{ create_almalinux_vm_pool }}/{{ create_almalinux_vm_name }}
+      - --virt-type=kvm
+      - --network=bridge={{ create_almalinux_vm_bridge }}
+      - --boot=uefi,firmware.feature0.name=secure-boot,firmware.feature0.enabled=yes,firmware.feature1.name=enrolled-keys,firmware.feature1.enabled=yes
+      - --memballoon=virtio
+      - --autostart
+      - --noautoconsole
+  changed_when: true

@@ -1,0 +1,38 @@
+---
+- name: List volumes in the storage pool
+  become: true
+  community.libvirt.virt_volume:
+    pool: "{{ create_almalinux_vm_pool }}"
+    command: list_volumes
+  register: volumes
+
+- name: Transform volume list
+  ansible.builtin.set_fact:
+    volume_names: "{{ volumes.list_volumes | map(attribute='name') | list }}"
+
+- name: Create volume for VM
+  when: create_almalinux_vm_name not in volume_names
+  become: true
+  community.libvirt.virt_volume:
+    state: present
+    pool: "{{ create_almalinux_vm_pool }}"
+    xml: "{{ lookup('ansible.builtin.template', 'volume.xml.j2') }}"
+
+- name: Wipe volume
+  when: create_almalinux_vm_name in volume_names
+  become: true
+  community.libvirt.virt_volume:
+    pool: "{{ create_almalinux_vm_pool }}"
+    command: wipe
+    name: "{{ create_almalinux_vm_name }}"
+
+- name: Copy QCOW2 image to volume
+  become: true
+  ansible.builtin.command:
+    argv:
+      - qemu-img
+      - convert
+      - -Oraw
+      - "{{ create_almalinux_vm_qcow2_path }}"
+      - /dev/{{ create_almalinux_vm_vg }}/{{ create_almalinux_vm_name }}
+  changed_when: true

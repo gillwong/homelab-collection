@@ -1,0 +1,15 @@
+#cloud-config
+
+preserve_hostname: false
+hostname: {{ create_almalinux_vm_name }}
+fqdn: {{ create_almalinux_vm_fqdn }}
+prefer_fqdn_over_hostname: false
+
+ssh_pwauth: false
+ssh_authorized_keys: {{ create_almalinux_vm_pubkeys }}
+
+package_update: true
+package_upgrade: true
+package_reboot_if_required: false
+packages:
+  - qemu-guest-agent

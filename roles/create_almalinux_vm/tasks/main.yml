@@ -1,0 +1,8 @@
+---
+# tasks file for create_almalinux_vm
+
+- name: Create storage volume for VM
+  ansible.builtin.import_tasks: volume.yml
+
+- name: Create and start VM
+  ansible.builtin.import_tasks: vm.yml

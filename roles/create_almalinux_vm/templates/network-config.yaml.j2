@@ -1,0 +1,7 @@
+version: 2
+ethernets:
+  eth0:
+    addresses: {{ create_almalinux_vm_ipv4s }}
+    gateway4: {{ create_almalinux_vm_gateway_ipv4 }}
+    nameservers:
+      addresses: {{ create_almalinux_vm_nameservers_ipv4 }}

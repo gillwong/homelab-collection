@@ -1,0 +1,16 @@
+---
+# defaults file for create_almalinux_vm
+
+create_almalinux_vm_fqdn: "{{ create_almalinux_vm_name }}"
+
+create_almalinux_vm_mem_mib: 2048
+create_almalinux_vm_vcpus: 1
+create_almalinux_vm_vol_cap_g: 20
+
+create_almalinux_vm_qcow2_path: /home/gillwong/downloads/AlmaLinux-10-GenericCloud-10.0-20250528.0.x86_64_v2.qcow2
+create_almalinux_vm_vg: rhel
+
+create_almalinux_vm_bridge: br0
+create_almalinux_vm_gateway_ipv4: 192.168.0.1
+create_almalinux_vm_nameservers_ipv4:
+  - 192.168.0.1
