@@ -1,0 +1,8 @@
+---
+# tasks file for shutdown_vm
+
+- name: Shutdown VM
+  become: true
+  community.libvirt.virt:
+    name: "{{ shutdown_vm_name }}"
+    state: shutdown
