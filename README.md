@@ -60,5 +60,9 @@ override_var: value
 - **os**: Utility role to check a system's OS family
 - **pve**: Proxmox VE node base configuration
 - **ntp**: Network Time Protocol configuration
+- **libvirt_base**: Libvirt host configuration
+- **update_libosinfo**: Updates libosinfo local database
+- **create_almalinux_vm**: Creates an Almalinux 10 virtual machine using libvirt
+- **shutdown_vm**: Shuts down a virtual machine using libvirt
 
 See each role's `README.md` for more details and available variables.
